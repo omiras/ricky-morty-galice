@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 export function SingleCharacter() {
+
+    // id es el nomnre del parámetro que hemos puesto como parámetro dinámico del a ruta en layout.js
+
+    // <Route path="/character/:id" element={<SingleCharacter />} />
+
 
     const { id } = useParams();
 
@@ -17,15 +22,34 @@ export function SingleCharacter() {
         - Gender
      */
 
+    const getCharacter = () => {
+        fetch('https://rickandmortyapi.com/api/character/' + id)
+            .then(res => res.json())
+            .then(data => setCharacter(data));
+    }
+
+    useEffect(() => {
+        getCharacter(); // <--- implementame !!
+    }, [])
+
+    const [character, setCharacter] = useState({
+        name: '',
+        image: '',
+        gender: '',
+        species: '',
+        status: ''
+    })
+
     return (
         <div className="card mx-auto" style={{
             width: "18rem"
         }}>
-            <img src="..." className="card-img-top" alt="..." />
+            <img src={character.image} className="card-img-top" alt="..." />
             <div className="card-body">
-                <h5 className="card-title">Título de la tarjeta</h5>
-                <p className="card-text">Un texto de ejemplo rápido para colocal cerca del título de la tarjeta y componer la mayor parte del contenido de la tarjeta.</p>
-                <a href="#" className="btn btn-primary">Ir a algún lugar</a>
+                <h5 className="card-title">{character.name}</h5>
+                <p className="card-text">{character.gender}</p>
+                <p className="card-text">{character.species}</p>
+                <p className="card-text">{character.status}</p>
             </div>
         </div>
     );
