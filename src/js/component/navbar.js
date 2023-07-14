@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const Navbar = () => {
+export const Navbar = ({ numFavorites }) => {
 	return (
 		<nav className="navbar navbar-light bg-light mb-3">
 			<Link to="/">
 				<span className="navbar-brand mb-0 h1">React Boilerplate</span>
+			</Link>
+			<Link to="/favorites">
+				<span className="btn btn-success">Favorites<span className="badge text-bg-secondary">{numFavorites}</span></span>
 			</Link>
 			<Link to="/all-characters">
 				<span className="btn btn-primary">All Characters</span>

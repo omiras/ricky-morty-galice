@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
@@ -7,23 +7,25 @@ import { Demo } from "./views/demo";
 import { Single } from "./views/single";
 import { Characters } from "./views/characters";
 
-import injectContext from "./store/appContext";
+import injectContext, { Context } from "./store/appContext";
+
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { SingleCharacter } from "./views/singlecharacter";
+import { Favorites } from "./views/favorites";
 
 //create your first component
 const Layout = () => {
 	//the basename is used when your project is published in a subdirectory and not in the root of the domain
 	// you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
 	const basename = process.env.BASENAME || "";
-
+	const { store, actions } = useContext(Context);
 	return (
 		<div>
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					<Navbar />
+					<Navbar numFavorites={actions.getTotalFavorites()} />
 					<Routes>
 						{/** path: ruta que pondriamos en la URL del navegador
 						 * element: el componente/vista que vamos a renderizar
@@ -31,6 +33,7 @@ const Layout = () => {
 						<Route path="/" element={<Home />} />
 						<Route path="/demo" element={<Demo />} />
 						<Route path="/all-characters" element={<Characters />} />
+						<Route path="/favorites" element={<Favorites />} />
 						<Route path="/single/:theid" element={<Single />} />
 						<Route path="/character/:id" element={<SingleCharacter />} />
 						{/** /single/1, /single/patata , /single/loquesea */}

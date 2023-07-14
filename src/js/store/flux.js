@@ -16,13 +16,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+			getTotalFavorites: () => {
+				const store = getStore();
 
+				return store.favorites.length;
+
+			},
 			addToFavorites: (character) => {
 				// 1. Recuperar el almacen de variables globales
 				const store = getStore();
 
 				// 2. Crear una nueva variable con el estado anterior + el nuevo
-				const newFavorites = [...store.favorites, { ...character }];
+				const newFavorites = [...store.favorites, { ...character, created: new Date() }];
 
 				// 3. Machacar la variable de estado con la nueva info
 				setStore({ favorites: newFavorites });
