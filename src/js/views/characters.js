@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 /**
  * 1. Declarar una variable de estado para albergar todos los characters
@@ -27,11 +26,10 @@ export function Characters() {
             <h1>All Characters</h1>
             <div className="container">
                 <div className="row row-cols-3">
-                    {characters.map(c => <Link key={c.id} to={"/character/" + c.id}><div >
+                    {characters.map(c => <div key={c.id}>
                         <img src={c.image}></img>
                         <p>{c.name}</p>
-                    </div>
-                    </Link>)}
+                    </div>)}
                 </div>
             </div>
 
