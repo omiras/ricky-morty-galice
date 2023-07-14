@@ -1,7 +1,8 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const Navbar = () => {
+export const Navbar = ({ numFavorites }) => {
 	return (
 		<nav className="navbar navbar-light bg-light mb-3">
 			<Link to="/">
@@ -11,7 +12,7 @@ export const Navbar = () => {
 				<span className="btn btn-primary">All Characters</span>
 			</Link>
 			<Link to="/favorites">
-				<span className="btn btn-info">View Favorites</span>
+				<span className="btn btn-success">View Favorites<span className="badge text-bg-secondary">{numFavorites}</span></span>
 			</Link>
 			<div className="ml-auto">
 				<Link to="/demo">

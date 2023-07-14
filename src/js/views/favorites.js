@@ -9,7 +9,7 @@ export function Favorites() {
     console.log(store.favorites)
     return (
         <div className="text-center">
-            <h1>Last Visited Characters</h1>
+            <h1>Favorite Characters</h1>
             <div className="container">
                 <div className="row row-cols-3">
                     {store.favorites.map(c => <Link key={c.id} to={"/character/" + c.id}><div >
