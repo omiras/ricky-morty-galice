@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext"; import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 export function SingleCharacter() {
 
@@ -10,6 +11,7 @@ export function SingleCharacter() {
 
     const { id } = useParams();
     const { store, actions } = useContext(Context);
+
 
     /**
      * 1. DEclarar una variable de estado para albergar la información del personaje
@@ -23,12 +25,22 @@ export function SingleCharacter() {
         - Gender
      */
 
+    const navigate = useNavigate();
+
+
     const getCharacter = () => {
         fetch('https://rickandmortyapi.com/api/character/' + id)
-            .then(res => res.json())
+            .then(res => {
+                console.log(res)
+                if (!res.ok) {
+                    throw new Error("APi failed");
+                }
+                return res.json()
+            })
             .then((data) => {
                 setCharacter(data);
-            });
+            })
+            .catch(error => { console.log(error); navigate("/404"); })
     }
 
     useEffect(() => {
