@@ -16,6 +16,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: []
 		},
 		actions: {
+			removeFavorites(id) {
+				//get the store
+				const store = getStore();
+
+				// add new visit
+				const favorites = store.favorites.filter(f => id !== f.id);
+
+				//reset the global store
+				setStore({ favorites });
+			},
 			addFavorites(character) {
 				//get the store
 				const store = getStore();

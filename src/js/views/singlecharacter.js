@@ -8,9 +8,19 @@ export function SingleCharacter() {
 
     // <Route path="/character/:id" element={<SingleCharacter />} />
 
-
     const { id } = useParams();
     const { store, actions } = useContext(Context);
+
+
+    const checkFavorite = () => {
+        console.log(store.favorites);
+        const res = store.favorites.some(f => +id === f.id)
+        console.log('está este id ', id, res);
+        return res;
+
+    }
+
+    const [isFavorite, setIsFavorite] = useState(checkFavorite);
 
 
     /**
@@ -55,9 +65,15 @@ export function SingleCharacter() {
         status: ''
     })
 
-    const handleClick = () => {
+    const handleAddFavorites = () => {
         console.log('Añadido a favortos: ' + character.name);
         actions.addFavorites(character);
+        setIsFavorite(true);
+    }
+
+    const handleRemoveFavorites = () => {
+        actions.removeFavorites(character.id);
+        setIsFavorite(false);
     }
 
     return (
@@ -70,7 +86,8 @@ export function SingleCharacter() {
                 <p className="card-text">{character.gender}</p>
                 <p className="card-text">{character.species}</p>
                 <p className="card-text">{character.status}</p>
-                <button onClick={handleClick} className="btn btn-primary">Añadir Favoritos</button>
+                {!isFavorite && <button onClick={handleAddFavorites} className="btn btn-primary">Añadir Favoritos</button>}
+                {isFavorite && <button onClick={handleRemoveFavorites} className="btn btn-danger">Eliminar Favoritos</button>}
 
             </div>
         </div>
