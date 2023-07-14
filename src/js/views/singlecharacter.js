@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import React, { useContext, useState, useEffect } from "react";
+import { Context } from "../store/appContext"; import { useParams } from "react-router";
 
 export function SingleCharacter() {
 
@@ -9,6 +9,7 @@ export function SingleCharacter() {
 
 
     const { id } = useParams();
+    const { store, actions } = useContext(Context);
 
     /**
      * 1. DEclarar una variable de estado para albergar la información del personaje
@@ -25,7 +26,9 @@ export function SingleCharacter() {
     const getCharacter = () => {
         fetch('https://rickandmortyapi.com/api/character/' + id)
             .then(res => res.json())
-            .then(data => setCharacter(data));
+            .then((data) => {
+                setCharacter(data);
+            });
     }
 
     useEffect(() => {
@@ -40,6 +43,11 @@ export function SingleCharacter() {
         status: ''
     })
 
+    const handleClick = () => {
+        console.log('Añadido a favortos: ' + character.name);
+        actions.addFavorites(character);
+    }
+
     return (
         <div className="card mx-auto" style={{
             width: "18rem"
@@ -50,6 +58,8 @@ export function SingleCharacter() {
                 <p className="card-text">{character.gender}</p>
                 <p className="card-text">{character.species}</p>
                 <p className="card-text">{character.status}</p>
+                <button onClick={handleClick} className="btn btn-primary">Añadir Favoritos</button>
+
             </div>
         </div>
     );
